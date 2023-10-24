@@ -65,7 +65,7 @@ app.get('/', (req, res) => {
     });
   } else {
     // User is not logged in, show a link to the login page
-    res.send('<a href="/auth/github">Log in with GitHub</a>');
+    res.send('<a href="http://localhost:3000/auth/github">Log in with GitHub</a>');
   }
 });
 
@@ -73,7 +73,7 @@ app.get('/auth/github', passport.authenticate('github'));
 
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), function(req, res) {
   // Successful authentication, redirect home.
-  res.redirect('/');
+  res.redirect('https://hussien-talha.github.io/to-do/');
 });
 
 app.listen(3000, () => {
