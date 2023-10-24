@@ -57,6 +57,7 @@ passport.deserializeUser(function(id, done) {
 
 // Define routes
 app.get('/todo', (req, res) => {
+  res.sendFile(__dirname + '/to-do.html');  
   if (req.isAuthenticated()) {
     // User is logged in, display their tasks
     Task.find({ userId: req.user.id }, function(err, tasks) {
@@ -73,7 +74,7 @@ app.get('/auth/github', passport.authenticate('github'));
 
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), function(req, res) {
   // Successful authentication, redirect home.
-  res.redirect('/to-do');
+  res.redirect('/todo');
 });
 
 app.listen(3000, () => {
