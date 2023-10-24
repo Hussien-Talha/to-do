@@ -73,7 +73,7 @@ app.get('/auth/github', passport.authenticate('github'));
 
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), function(req, res) {
   // Successful authentication, redirect home.
-  res.redirect('https://hussien-talha.github.io/to-do/');
+  res.redirect('https://hussien-talha.github.io/to-do/to-do.html');
 });
 
 app.listen(3000, () => {
