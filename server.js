@@ -12,7 +12,9 @@ app.get('/', (req, res) => {
 });
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost/todo-app', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:29664/todo-app', { useNewUrlParser: true, useUnifiedTopology: true })
+ .then(() => console.log('Connected to MongoDB...'))
+  .catch(err => console.error('Could not connect to MongoDB...', err));
 
 // Define a schema for your tasks
 const TaskSchema = new mongoose.Schema({
@@ -28,8 +30,8 @@ const Task = mongoose.model('Task', TaskSchema);
 
 // Configure Passport.js for GitHub authentication
 passport.use(new GitHubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    clientID: '21318c09e59118dba01d',
+    clientSecret: '6b175b01313b4eecd178e402fc74a41bd3189eb3',
     callbackURL: "http://localhost:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -39,7 +41,7 @@ passport.use(new GitHubStrategy({
 ));
 
 // Configure Express.js
-app.use(session({ secret: process.env.SESSION_SECRET_KEY, resave: false, saveUninitialized: false }));
+app.use(session({ secret: '19f8600344869ddc2aba55b315e93bed28f16319994ad5287ba721263d8b8cefdb9ae968f4228ac0f288d8a48434b2afff93dc0a5ca57594af9e7ea6d66e7f98', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
