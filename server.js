@@ -7,8 +7,8 @@ const session = require('express-session');
 // Back-end (Node.js, Express.js)
 const app = express();
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/to-do.html');
+app.get('/login', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
 });
 
 // Connect to MongoDB
@@ -56,7 +56,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 // Define routes
-app.get('/', (req, res) => {
+app.get('/todo', (req, res) => {
   if (req.isAuthenticated()) {
     // User is logged in, display their tasks
     Task.find({ userId: req.user.id }, function(err, tasks) {
@@ -64,8 +64,8 @@ app.get('/', (req, res) => {
       res.send('Your tasks: ' + JSON.stringify(tasks));
     });
   } else {
-    // User is not logged in, show a link to the login page
-    res.send('<a href="http://localhost:3000/auth/github">Log in with GitHub</a>');
+    // User is not logged in, redirect to the login page
+    res.redirect('/login');
   }
 });
 
@@ -73,7 +73,7 @@ app.get('/auth/github', passport.authenticate('github'));
 
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), function(req, res) {
   // Successful authentication, redirect home.
-  res.redirect('https://hussien-talha.github.io/to-do/to-do.html');
+  res.redirect('/to-do');
 });
 
 app.listen(3000, () => {
