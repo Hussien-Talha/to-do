@@ -5,16 +5,10 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 
 // Back-end (Node.js, Express.js)
-
-const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
-});
-
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
 });
 
 // Connect to MongoDB
@@ -45,7 +39,7 @@ passport.use(new GitHubStrategy({
 ));
 
 // Configure Express.js
-app.use(session({ secret: 'secret key', resave: false, saveUninitialized: false }));
+app.use(session({ secret: process.env.SESSION_SECRET_KEY, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
